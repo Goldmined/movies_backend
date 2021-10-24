@@ -1,0 +1,26 @@
+[
+  {
+    "$project": {
+      "genres": true, 
+      "_id": false, 
+      "year": true
+    }
+  }, {
+    "$unwind": {
+      "path": "$genres"
+    }
+  }, {
+    "$group": {
+      "_id": "$year", 
+      "genres": {
+        "$addToSet": "$genres"
+      }
+    }
+  }, {
+    "$sort": {
+      "_id": -1
+    }
+  }, {
+    "$out": "movie_years"
+  }
+]
